@@ -14,16 +14,15 @@ defmodule Day01 do
     acc
   end
 
-  def calcLevel(s, acc) do
-    case String.at(s, 0) do
-      "(" -> calcLevel(String.slice(s, 1, String.length(s)), acc + 1)
-      ")" -> calcLevel(String.slice(s, 1, String.length(s)), acc - 1)
-    end
+  def calcLevel(s) do
+    pos = s |> String.codepoints |> Enum.count(&(&1 == "("))
+    neg = s |> String.codepoints |> Enum.count(&(&1 == ")"))
+    pos - neg
   end
 
   def day01Part1 do
     readInput()
-    |> calcLevel(0)
+    |> calcLevel()
   end
 
   def calcBasementEnter(s, level, charPos) do
